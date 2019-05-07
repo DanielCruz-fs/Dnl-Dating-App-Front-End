@@ -10,8 +10,7 @@ export class NavbarComponent implements OnInit {
   model: any = {};
   constructor(private authService: AuthService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login() {
     this.authService.login(this.model).subscribe(res => {
