@@ -20,7 +20,7 @@
 
     <div class="dropdown mr-2" *ngIf="loggedIn()">
       <a class="dropdown-toggle text-light" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Welcome
+        {{ authService.decodedToken.unique_name }}
       </a>
     
       <div class="dropdown-menu mr-5" aria-labelledby="dropdownMenuLink">

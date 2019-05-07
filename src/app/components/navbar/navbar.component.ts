@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,26 +9,27 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   model: any = {};
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {}
 
   login() {
     this.authService.login(this.model).subscribe(res => {
-      console.log('logged in');
+      this.alertifyService.success('logged in');
     }, error => {
-      console.log('Failed to login.');
+      this.alertifyService.error('Failed to login, check credentials.');
     });
   }
 
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    //**here we can see how chain detection works for app to in sync with data flow */
+    // console.log('chain detection active');
+    return this.authService.loggedIn();
   }
 
   logout() {
     localStorage.removeItem('token');
-    console.log('log out');
+    this.alertifyService.warning('log out');
   }
 
 }
