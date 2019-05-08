@@ -8,6 +8,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
+import { MemberListComponent } from './components/member-list/member-list.component';
+import { ListComponent } from './components/list/list.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
 
 
@@ -16,7 +19,10 @@ import { RegisterComponent } from './components/register/register.component';
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    MemberListComponent,
+    ListComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
