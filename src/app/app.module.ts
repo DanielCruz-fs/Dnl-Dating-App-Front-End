@@ -12,7 +12,13 @@ import { MemberListComponent } from './components/member-list/member-list.compon
 import { ListComponent } from './components/list/list.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MemberCardComponent } from './components/member-card/member-card.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
+//HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests (@auth0/angular-jwt v2).
+//fixing issue
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 
 @NgModule({
@@ -30,7 +36,14 @@ import { MemberCardComponent } from './components/member-card/member-card.compon
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:44340'],
+        blacklistedRoutes: ['localhost:44340/api/auth']
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
