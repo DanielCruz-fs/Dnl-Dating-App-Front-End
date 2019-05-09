@@ -11,6 +11,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { ListComponent } from './components/list/list.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { MemberCardComponent } from './components/member-card/member-card.component';
 
 
 
@@ -22,7 +23,8 @@ import { MessagesComponent } from './components/messages/messages.component';
     RegisterComponent,
     MemberListComponent,
     ListComponent,
-    MessagesComponent
+    MessagesComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
