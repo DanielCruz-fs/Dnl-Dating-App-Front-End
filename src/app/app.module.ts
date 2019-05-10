@@ -13,6 +13,7 @@ import { ListComponent } from './components/list/list.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MemberCardComponent } from './components/member-card/member-card.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { MemberDetailComponent } from './components/member-detail/member-detail.component';
 
 //HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests (@auth0/angular-jwt v2).
 //fixing issue
@@ -30,7 +31,8 @@ export function tokenGetter() {
     MemberListComponent,
     ListComponent,
     MessagesComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberDetailComponent
   ],
   imports: [
     BrowserModule,
