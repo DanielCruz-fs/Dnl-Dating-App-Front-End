@@ -24,7 +24,7 @@
       </a>
     
       <div class="dropdown-menu mr-5" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#"><i class="far fa-user"></i> Edit Profile</a>
+        <a class="dropdown-item" [routerLink]="['/members/edit']"><i class="far fa-user"></i> Edit Profile</a>
         
         <a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
       </div>

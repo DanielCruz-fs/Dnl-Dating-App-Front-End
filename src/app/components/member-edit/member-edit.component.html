@@ -1,0 +1,83 @@
+<div *ngIf="user" class="container mt-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>{{ user.knownAs }}'s profile</h1>
+    </div>
+    <div class="col-sm-8" *ngIf="editForm.dirty">
+        <div class="alert alert-warning" role="alert">
+          You have made some changes!
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img [src]="user.photoUrl" [alt]="user.knownAs" class="card-img-top">
+        <div class="card-body">
+          <div>
+            <strong>Location:</strong>
+            <p>{{ user.city }} {{ user.country }}</p>
+          </div>
+
+          <div>
+            <strong>Age:</strong>
+            <p>{{ user.age }}</p>
+          </div>
+
+          <div>
+            <strong>Last active:</strong>
+            <p>{{ user.lastActive }}</p>
+          </div>
+
+          <div>
+            <strong>Member since:</strong>
+            <p>{{ user.created }}</p>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button [disabled]="!editForm.dirty" class="btn btn-success btn-block" form="editForm">Save Changes</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-4">
+              <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Edit Profile</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Photos Settings</a>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                  
+                  <form #editForm="ngForm" (ngSubmit)="updateUser()" id="editForm">
+                  <h4>Description:</h4>                  
+                  <textarea name="introduction" cols="30" rows="5" [(ngModel)]="user.introduction"></textarea>
+                  <h4>Looking for:</h4>                  
+                  <textarea name="lookingFor" cols="30" rows="5" [(ngModel)]="user.lookingFor"></textarea>
+                  <h4>Interests:</h4>                  
+                  <textarea name="interests" cols="30" rows="5" [(ngModel)]="user.interests"></textarea>
+                  <h4>Location:</h4>                  
+                    
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" name="city" [(ngModel)]="user.city">
+                    <label for="country">Country</label>
+                    <input type="text" class="form-control" name="country" [(ngModel)]="user.country">
+                  
+                  </form>
+                  
+
+
+                </div>
+              
+                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-settings-list">
+                    ...
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
