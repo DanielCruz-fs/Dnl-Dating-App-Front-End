@@ -61,7 +61,7 @@
                 <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                     <ul class="list-unstyled">
                         <li class="media" *ngFor="let p of user.photos">
-                          <img [src]="p.url" class="mr-3">
+                          <img [src]="p.url" class="mr-3 img-thumbnail" width="128px">
                           <div class="media-body">
                             <h5 class="mt-0 mb-1">{{ p.dateAdded }}</h5>
                             {{ p.description }}

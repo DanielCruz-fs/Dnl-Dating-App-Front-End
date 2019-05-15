@@ -15,6 +15,8 @@ import { MemberCardComponent } from './components/member-card/member-card.compon
 import { JwtModule } from '@auth0/angular-jwt';
 import { MemberDetailComponent } from './components/member-detail/member-detail.component';
 import { MemberEditComponent } from './components/member-edit/member-edit.component';
+import { PhotoEditorComponent } from './components/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 //HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests (@auth0/angular-jwt v2).
 //fixing issue
@@ -34,13 +36,15 @@ export function tokenGetter() {
     MessagesComponent,
     MemberCardComponent,
     MemberDetailComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    FileUploadModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
