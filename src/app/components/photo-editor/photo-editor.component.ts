@@ -4,6 +4,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -18,7 +19,8 @@ export class PhotoEditorComponent implements OnInit {
   baseUrl = environment.apiUrl;
   currentMain: Photo;
  
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService,
+              private alertifyService: AlertifyService) { }
 
   ngOnInit() {
     this.initilizeUploader();
@@ -67,6 +69,18 @@ export class PhotoEditorComponent implements OnInit {
       this.authService.currentUser.photoUrl = photo.url;
       localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
     }, error => console.log(error));
+  }
+
+  deletePhoto(id: number) {
+    this.alertifyService.confirm('Are you sure?', () => {
+      this.userService.deletePhoto(this.authService.currentUser.id, id).subscribe( () => {
+        /**remove the photo */
+        this.photos.splice(this.photos.findIndex( p => p.id === id), 1);
+        this.alertifyService.success('photo deleted');
+      }, error => {
+        this.alertifyService.error('Failed to delete photo');
+      });
+    });
   }
 
 }

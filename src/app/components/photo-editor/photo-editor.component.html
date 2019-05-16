@@ -5,7 +5,7 @@
           <div class="card-body">
               <button class="btn btn-sm" (click)="setMainPhoto(p)" [disabled]="p.isMain"
               [ngClass]="p.isMain ? 'btn-success active': 'btn-info'">Main</button>&nbsp;
-              <button class="btn btn-sm btn-danger">Delete</button>
+              <button (click)="deletePhoto(p.id)" class="btn btn-sm btn-danger" [disabled]="p.isMain">Delete</button>
           </div>
         </div>
   </div>
