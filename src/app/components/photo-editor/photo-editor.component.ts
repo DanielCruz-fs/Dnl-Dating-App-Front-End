@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Photo } from 'src/app/interfaces/photo';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -11,11 +12,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[] = [];
+  @Output() getMemberPhotoChange = new EventEmitter<string>();
   public uploader:FileUploader;
   public hasBaseDropZoneOver:boolean = false;
   baseUrl = environment.apiUrl;
+  currentMain: Photo;
  
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     this.initilizeUploader();
@@ -51,6 +54,19 @@ export class PhotoEditorComponent implements OnInit {
         this.photos.push(photo);
       }
     };
+  }
+
+  setMainPhoto(photo: Photo) {
+    this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id).subscribe( resp => {
+      console.log(resp);
+      this.currentMain = this.photos.filter(p => p.isMain == true)[0];
+      this.currentMain.isMain = false;
+      photo.isMain = true;
+      this.getMemberPhotoChange.emit(photo.url);
+
+      this.authService.currentUser.photoUrl = photo.url;
+      localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+    }, error => console.log(error));
   }
 
 }

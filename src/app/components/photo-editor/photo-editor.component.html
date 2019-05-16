@@ -3,7 +3,8 @@
       <div class="card">
           <img [src]="p.url" class="card-img-top" width="128px">
           <div class="card-body">
-              <button class="btn btn-sm btn-info">Main</button>&nbsp;
+              <button class="btn btn-sm" (click)="setMainPhoto(p)" [disabled]="p.isMain"
+              [ngClass]="p.isMain ? 'btn-success active': 'btn-info'">Main</button>&nbsp;
               <button class="btn btn-sm btn-danger">Delete</button>
           </div>
         </div>
