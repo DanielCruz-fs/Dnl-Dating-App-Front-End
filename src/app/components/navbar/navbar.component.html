@@ -19,7 +19,7 @@
     </ul>
 
     <div class="dropdown mr-2" *ngIf="loggedIn()">
-      <span *ngIf="authService.currentUser.photoUrl"><img [src]="authService.currentUser.photoUrl" alt=""></span>
+      <span><img [src]="authService.currentUser.photoUrl || 'assets/user.jpg'" alt=""></span>
       <a class="dropdown-toggle text-light" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{ authService.decodedToken.unique_name }}
       </a>

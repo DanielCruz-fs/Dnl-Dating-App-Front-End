@@ -1,18 +1,105 @@
-<form #registerForm="ngForm" (ngSubmit)="register()">
+<form [formGroup]="registerForm" (ngSubmit)="register()">
   <h2 class="text-center text-primary">Sign Up</h2>
   <hr>
 
+  <!-- gender -->
   <div class="form-group">
-    <input type="text" class="form-control" name="username" [(ngModel)]="model.username" required placeholder="Username">
+    <label class="control-label" style="margin-right:10px">I am a: </label>
+    <label class="radio-inline">
+      <input class="mr-3" type="radio" value="male" formControlName="gender">Male
+    </label>
+    <label class="radio-inline ml-3">
+      <input class="mr-3" type="radio" value="female" formControlName="gender">Female
+    </label>
   </div>
 
+  <!-- username -->
   <div class="form-group">
-    <input type="password" class="form-control" name="password" [(ngModel)]="model.password" required placeholder="Password">
+    <input type="text" class="form-control" formControlName="username" placeholder="Username"
+           [ngClass]="{'is-invalid': (registerForm.controls['username'].errors?.required &&
+           registerForm.controls['username'].touched),
+           'is-valid': registerForm.controls['username'].valid}">
+    <div class="invalid-feedback">Please choose a username</div>
+  </div>
+
+  <!-- known as -->
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': (registerForm.get('knownAs').errors && registerForm.get('knownAs').touched),
+    'is-valid': registerForm.controls['knownAs'].valid }" class="form-control"
+      placeholder="Known as" formControlName="knownAs">
+    <div class="invalid-feedback" *ngIf="registerForm.get('knownAs').touched && registerForm.get('knownAs').hasError('required')">Known as is required</div>
+  </div>
+
+  <!-- date of birth -->
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': (registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched),
+                      'is-valid': registerForm.controls['dateOfBirth'].valid }" class="form-control"
+      placeholder="Date of Birth" formControlName="dateOfBirth" type="date" >
+    <div class="invalid-feedback" *ngIf="registerForm.get('dateOfBirth').touched && registerForm.get('dateOfBirth').hasError('required')">Date of Birth is required</div>
+  </div>
+
+  <!-- city -->
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': (registerForm.get('city').errors && registerForm.get('city').touched),
+                     'is-valid': registerForm.controls['city'].valid }" class="form-control"
+      placeholder="City" formControlName="city">
+    <div class="invalid-feedback" *ngIf="registerForm.get('city').touched && registerForm.get('city').hasError('required')">City is required</div>
+  </div>
+
+  <!-- country -->
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': (registerForm.get('country').errors && registerForm.get('country').touched),
+                     'is-valid': registerForm.controls['country'].valid}" class="form-control"
+      placeholder="Country" formControlName="country">
+    <div class="invalid-feedback" *ngIf="registerForm.get('country').touched && registerForm.get('country').hasError('required')">Country is required</div>
+  </div>
+
+  <!-- password -->
+  <div class="form-group">
+    <input type="password" class="form-control" formControlName="password" placeholder="Password"
+           [ngClass]="{'is-invalid': (registerForm.controls['password'].errors &&
+           registerForm.controls['password'].touched),
+           'is-valid': registerForm.controls['password'].valid}">
+    <div class="invalid-feedback"
+         *ngIf="registerForm.get('password').hasError('required') &&
+                registerForm.get('password').touched">Password is required</div>
+
+    <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength') &&
+                registerForm.get('password').touched">Password cannot be
+         less than {{ registerForm.controls['password'].errors?.minlength?.requiredLength }} chars
+    </div>
+
+    <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength') &&
+                registerForm.get('password').touched">Password cannot be
+         greater than {{ registerForm.controls['password'].errors?.maxlength?.requiredLength }} chars
+    </div>
+
+  </div>
+  <!-- confirm password -->
+  <div class="form-group">
+    <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password"
+           [ngClass]="{'is-invalid': (registerForm.controls['confirmPassword'].errors &&
+           registerForm.controls['confirmPassword'].touched) || 
+           (registerForm.controls['confirmPassword'].touched && registerForm.hasError('mismatch')),
+           'is-valid': registerForm.controls['confirmPassword'].valid}">
+    
+    <div class="invalid-feedback"
+         *ngIf="registerForm.get('confirmPassword').hasError('required') &&
+         registerForm.get('confirmPassword').touched">Confirm Password is required
+    </div>
+
+    <div class="invalid-feedback"
+         *ngIf="registerForm.hasError('mismatch') &&
+         registerForm.get('confirmPassword').touched">Passwords must match
+    </div>
+
   </div>
 
   <div class="form-group text-center">
-    <button class="btn btn-success" type="submit">Register</button>&nbsp;
+    <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Register</button>&nbsp;
     <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
   </div>
   
 </form>
+<p>{{ registerForm.value | json }}</p>
+<p>{{ registerForm.status }}</p>

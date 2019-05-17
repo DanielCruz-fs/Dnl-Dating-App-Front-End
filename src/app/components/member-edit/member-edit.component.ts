@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
 export class MemberEditComponent implements OnInit {
   user: User;
   @ViewChild('editForm') editForm: NgForm;
-  constructor(private authService: AuthService, private userService: UserService,
+  constructor(public authService: AuthService, private userService: UserService,
               private alertifyService: AlertifyService) { }
 
   ngOnInit() {
