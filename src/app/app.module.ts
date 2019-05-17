@@ -17,6 +17,8 @@ import { MemberDetailComponent } from './components/member-detail/member-detail.
 import { MemberEditComponent } from './components/member-edit/member-edit.component';
 import { PhotoEditorComponent } from './components/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { TimeAgoPipe } from 'time-ago-pipe';
+
 
 //HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests (@auth0/angular-jwt v2).
 //fixing issue
@@ -37,7 +39,8 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
