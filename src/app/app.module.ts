@@ -18,6 +18,7 @@ import { MemberEditComponent } from './components/member-edit/member-edit.compon
 import { PhotoEditorComponent } from './components/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 //HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests (@auth0/angular-jwt v2).
@@ -49,6 +50,7 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
+    PaginationModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

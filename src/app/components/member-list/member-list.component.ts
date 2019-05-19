@@ -9,17 +9,27 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MemberListComponent implements OnInit {
   users: User[] = [];
+  paginationDetails: { currentPage: number, pageSize: number, totalCount: number, totalPages: number};
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.loadUsers();
+    this.loadUsers(1, 5);
   }
 
-  loadUsers() {
-    this.userService.getUsers().subscribe((data: User[]) => { 
-      this.users = data;
+  loadUsers(currentPage?, itemsPerPage?) {
+    this.userService.getUsers(currentPage, itemsPerPage).subscribe((data: any) => { 
       console.log(data);
+      this.users = data.users;
+      this.paginationDetails = { currentPage: data.currentPage, pageSize: data.pageSize, 
+                                 totalCount: data.totalCount, totalPages: data.totalPages };
     }, error => console.log(error));
+  }
+
+  // pagination
+  pageChanged(event: any): void {
+    this.paginationDetails.currentPage = event.page;
+    //console.log(this.paginationDetails.currentPage);
+    this.loadUsers(this.paginationDetails.currentPage, this.paginationDetails.pageSize);
   }
 
 }

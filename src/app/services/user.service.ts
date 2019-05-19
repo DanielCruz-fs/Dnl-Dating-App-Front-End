@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
 //we do not need this 'cause @auth0/angular-jwt does it for us
@@ -17,8 +17,13 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers() {
-    return this.http.get<User[]>(this.baseUrl + 'users');
+  getUsers(page?, itemsPerPage?) {
+    let params = new HttpParams();
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+    return this.http.get(this.baseUrl + 'users', { params });
   }
 
   getUser(id: number) {
