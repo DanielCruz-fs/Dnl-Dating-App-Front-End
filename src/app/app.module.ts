@@ -19,6 +19,7 @@ import { PhotoEditorComponent } from './components/photo-editor/photo-editor.com
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 
 //HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests (@auth0/angular-jwt v2).
@@ -51,6 +52,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     FileUploadModule,
     PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
