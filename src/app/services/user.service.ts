@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
+import { Message } from '../interfaces/Message';
 //we do not need this 'cause @auth0/angular-jwt does it for us
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -58,5 +59,24 @@ export class UserService {
 
   sendLike(id: number, recipientId: number) {
     return this.http.post(`${this.baseUrl}users/${id}/like/${recipientId}`, {});
+  }
+
+  getMessages(id: number, page?, itemsPerPage?, messageContainer?) {
+    console.log(messageContainer);
+
+    let params = new HttpParams().set('messageContainer', messageContainer);
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+    return this.http.get(`${this.baseUrl}users/${id}/messages`, { params });
+  }
+
+  getMessageThread(id: number, recipientId: number) {
+    return this.http.get(`${this.baseUrl}users/${id}/messages/thread/${recipientId}`);
+  }
+
+  sendMessage(id: number, message: Message) {
+    return this.http.post(`${this.baseUrl}users/${id}/messages`, message);
   }
 }
