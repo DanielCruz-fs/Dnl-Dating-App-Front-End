@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message } from 'src/app/interfaces/Message';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-member-messages',
@@ -19,7 +20,17 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   loadMessages() {
+    const currentUserId = this.authService.currentUser.id;
     this.userService.getMessageThread(this.authService.currentUser.id, this.recipientId)
+                    .pipe(
+                      tap((messages: Message[]) => {
+                        for (let i = 0; i < messages.length; i++) {
+                          if (messages[i].isRead === false && messages[i].recipientId === currentUserId)
+                          this.userService.markAsRead(currentUserId, messages[i].id);
+                          //console.log('message read');
+                        }
+                      })
+                    )
                     .subscribe( (resp: any) => {
                       this.messages = resp;
                       console.log(resp);

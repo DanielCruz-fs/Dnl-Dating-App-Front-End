@@ -30,17 +30,18 @@
         <td>{{message.content}}</td>
         <td>
           <div *ngIf="messageContainer != 'Outbox'">
-                <img src={{message?.senderPhotoUrl}} class="img-circle rounded-circle mr-1">
+                <img [src]="message.senderPhotoUrl" class="img-circle rounded-circle mr-1">
                 <strong>{{message.senderKnownAs}}</strong>
           </div>
           <div *ngIf="messageContainer == 'Outbox'">
-                <img src={{message?.recipientPhotoUrl}} class="img-circle rounded-circle mr-1">
+                <img [src]="message.recipientPhotoUrl" class="img-circle rounded-circle mr-1">
                 <strong>{{message.recipientKnownAs}}</strong>
           </div>
         </td>
         <td>{{message.messageSent | timeAgo}}</td>
         <td>
-          <button class="btn btn-danger">Delete</button>
+          <button class="btn btn-danger" (click)="deleteMessage(message.id)" 
+          (click)="$event.stopPropagation()">Delete</button>
         </td>
       </tr>
     </table>

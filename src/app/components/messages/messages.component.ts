@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Message } from 'src/app/interfaces/Message';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AlertifyService } from 'src/app/services/alertify.service';
 
 @Component({
   selector: 'app-messages',
@@ -12,7 +13,7 @@ export class MessagesComponent implements OnInit {
   paginationDetails: { currentPage: number, pageSize: number, totalCount: number, totalPages: number};
   messages: Message[] = [];
   messageContainer = 'Unread';
-  constructor(private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {
     this.loadMessages(1, 5);
@@ -34,5 +35,14 @@ export class MessagesComponent implements OnInit {
     this.paginationDetails.currentPage = event.page;
     //console.log(this.paginationDetails.currentPage);
     this.loadMessages(this.paginationDetails.currentPage, this.paginationDetails.pageSize);
+  }
+
+  deleteMessage(id: number) {
+    this.alertifyService.confirm('Are you sure?', () => {
+      this.userService.deleteMessage(id, this.authService.currentUser.id).subscribe( () => {
+        this.messages.splice(this.messages.findIndex(m => m.id == id), 1);
+        this.alertifyService.success('Message added.');
+      }, error => console.log(error));
+    });
   }
 }
